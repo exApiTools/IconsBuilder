@@ -26,7 +26,7 @@ namespace IconsBuilder
         public void Update(Entity entity, IconsBuilderSettings settings, Dictionary<string, Size2> modIcons)
         {
             Show = () => entity.IsAlive;
-            if(entity.IsHidden && settings.HideBurriedMonsters)
+            if (entity.IsHidden && settings.HideBurriedMonsters)
             {
                 Show = () => !entity.IsHidden && entity.IsAlive;
             }
@@ -56,7 +56,7 @@ namespace IconsBuilder
             }
 
             //if (_HasIngameIcon && entity.HasComponent<MinimapIcon>() && !entity.GetComponent<MinimapIcon>().Name.Equals("NPC") && entity.League != LeagueType.Heist)
-               // return;
+            // return;
 
             if (!entity.IsHostile)
             {
@@ -105,29 +105,169 @@ namespace IconsBuilder
                         case MonsterRarity.White:
                             MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.LootFilterLargeRedCircle);
                             if (settings.ShowWhiteMonsterName)
+                            {
                                 Text = RenderName.Split(',').FirstOrDefault();
+                                if (settings.ReplaceMonsterNameWithArchnemesis)
+                                    GenerateArchNemString(entity, settings);
+                            }
+
                             break;
                         case MonsterRarity.Magic:
                             MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.LootFilterLargeBlueCircle);
                             if (settings.ShowMagicMonsterName)
+                            {
                                 Text = RenderName.Split(',').FirstOrDefault();
+                                if (settings.ReplaceMonsterNameWithArchnemesis)
+                                    GenerateArchNemString(entity, settings);
+                            }
 
                             break;
                         case MonsterRarity.Rare:
                             MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.LootFilterLargeYellowCircle);
                             if (settings.ShowRareMonsterName)
+                            {
                                 Text = RenderName.Split(',').FirstOrDefault();
+                                if (settings.ReplaceMonsterNameWithArchnemesis)
+                                    GenerateArchNemString(entity, settings);
+                            }
+
                             break;
                         case MonsterRarity.Unique:
                             MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.LootFilterLargeCyanHexagon);
                             MainTexture.Color = Color.DarkOrange;
                             if (settings.ShowUniqueMonsterName)
                                 Text = RenderName.Split(',').FirstOrDefault();
+
                             break;
                         default:
                             throw new ArgumentOutOfRangeException(
                                 $"Rarity wrong was is {Rarity}. {entity.GetComponent<ObjectMagicProperties>().DumpObject()}");
                     }
+                }
+            }
+
+            void GenerateArchNemString(Entity entity, IconsBuilderSettings settings)
+            {
+                #region archnemMods List<()>()
+                var archnemMods = new List<(string, string)>()
+                {
+                    ("Abberath-touched", "MonsterArchnemesisAbberath"),
+                    ("Arakaali-touched", "MonsterArchnemesisArakaali_"),
+                    ("Arcane Buffer", "MonsterArchnemesisArcaneEnchantedMagic"),
+                    ("Arcane Buffer", "MonsterArchnemesisArcaneEnchanted"),
+                    ("Assassin", "MonsterArchnemesisAssassin"),
+                    ("Benevolent Guardian", "MonsterArchnemesisDivineTouched__"),
+                    ("Berserker", "MonsterArchnemesisBerserker__"),
+                    ("Bloodletter", "MonsterArchnemesisBloodletterMagic"),
+                    ("Bloodletter", "MonsterArchnemesisBloodletter_"),
+                    ("Bombardier", "MonsterArchnemesisBombardier___"),
+                    ("Bonebreaker", "MonsterArchnemesisBonebreakerMagic"),
+                    ("Bonebreaker", "MonsterArchnemesisBonebreaker_"),
+                    ("Brine King-touched", "MonsterArchnemesisBrineKing___"),
+                    ("Consecrator", "MonsterArchnemesisConsecratorMagic"),
+                    ("Consecrator", "MonsterArchnemesisConsecration_"),
+                    ("Corpse Detonator", "MonsterArchnemesisCorpseExploder_"),
+                    ("Corrupter", "MonsterArchnemesisCorrupterMagic"),
+                    ("Corrupter", "MonsterArchnemesisCorrupter_"),
+                    ("Crystal-skinned", "MonsterArchnemesisLivingCrystals__"),
+                    ("Deadeye", "MonsterArchnemesisDeadeyeMagic"),
+                    ("Deadeye", "MonsterArchnemesisDeadeye"),
+                    ("Drought Bringer", "MonsterArchnemesisFlaskDrain__"),
+                    ("Effigy", "MonsterArchnemesisVoodooDoll"),
+                    ("Echoist", "MonsterArchnemesisEchoist___"),
+                    ("Electrocuting", "MonsterArchnemesisShockerMagic"),
+                    ("Electrocuting", "MonsterArchnemesisShocker_"),
+                    ("Empowered Elements", "MonsterArchnemesisCycleOfElements"),
+                    ("Empowering Minions", "MonsterArchnemesisUnionOfSouls"),
+                    ("Entangler", "MonsterArchnemesisGraspingVines"),
+                    ("Executioner", "MonsterArchnemesisExecutioner"),
+                    ("Final Gasp", "MonsterArchnemesisFinalGasp"),
+                    ("Flame Strider", "MonsterArchnemesisFlameWalkerMagic"),
+                    ("Flame Strider", "MonsterArchnemesisFlameWalker_"),
+                    ("Flameweaver", "MonsterArchnemesisFlameTouched"),
+                    ("Frenzied", "MonsterArchnemesisRampage"),
+                    ("Frost Strider", "MonsterArchnemesisFrostWalkerMagic"),
+                    ("Frost Strider", "MonsterArchnemesisFrostWalker"),
+                    ("Frostweaver", "MonsterArchnemesisFrostTouched_"),
+                    ("Gargantuan", "MonsterArchnemesisGargantuan"),
+                    ("Hasted", "MonsterArchnemesisRaiderMagic"),
+                    ("Hasted", "MonsterArchnemesisRaider_"),
+                    ("Heralding Minions", "MonsterArchnemesisHeraldOfTheObelisk_"),
+                    ("Heralds of the Obelisk", "MonsterArchnemesisHeraldOfTheObeliskMagic"),
+                    ("Hexer", "MonsterArchnemesisHexer"),
+                    ("Chaosweaver", "MonsterArchnemesisVoidTouched"),
+                    ("Ice Prison", "MonsterArchnemesisGlacialCage"),
+                    ("Incendiary", "MonsterArchnemesisIgniterMagic"),
+                    ("Incendiary", "MonsterArchnemesisIgniter"),
+                    ("Innocence-touched", "MonsterArchnemesisInnocence_____"),
+                    ("Juggernaut", "MonsterArchnemesisJuggernaut___"),
+                    ("Kitava-touched", "MonsterArchnemesisKitava"),
+                    ("Lunaris-touched", "MonsterArchnemesisLunaris"),
+                    ("Magma Barrier", "MonsterArchnemesisVolatileFlameBlood"),
+                    ("Malediction", "MonsterArchnemesisOppressor_"),
+                    ("Mana Siphoner", "MonsterArchnemesisManaDonut"),
+                    ("Mirror Image", "MonsterArchnemesisMirrorImage"),
+                    ("Necromancer", "MonsterArchnemesisNecromancer_"),
+                    ("Opulent", "MonsterArchnemesisWealthy"),
+                    ("Overcharged", "MonsterArchnemesisChargeGenerator__"),
+                    ("Permafrost", "MonsterArchnemesisFreezerMagic"),
+                    ("Permafrost", "MonsterArchnemesisFreezer__"),
+                    ("Prismatic", "MonsterArchnemesisPrismaticMagic"),
+                    ("Prismatic", "MonsterArchnemesisPrismatic"),
+                    ("Rejuvenating", "MonsterArchnemesisRejuvenating"),
+                    ("Sentinel", "MonsterArchnemesisDefenderMagic"),
+                    ("Sentinel", "MonsterArchnemesisDefender"),
+                    ("Shakari-touched", "MonsterArchnemesisShakari_"),
+                    ("Solaris-touched", "MonsterArchnemesisSolaris"),
+                    ("Soul Conduit", "MonsterArchnemesisSoulConduit____"),
+                    ("Soul Eater", "MonsterArchnemesisSoulEater_"),
+                    ("Spirit Walkers", "MonsterArchnemesisSpiritWalkersMagic"),
+                    ("Splinterer", "MonsterArchnemesisMultiProjectiles"),
+                    ("Splitting", "MonsterArchnemesisSplitting_"),
+                    ("Steel-infused", "MonsterArchnemesisSteelAttuned___"),
+                    ("Storm Herald", "MonsterArchnemesisLightningStorm"),
+                    ("Storm Strider", "MonsterArchnemesisLightningWalkerMagic"),
+                    ("Storm Strider", "MonsterArchnemesisLightningWalker_"),
+                    ("Stormweaver", "MonsterArchnemesisStormTouched_"),
+                    ("Temporal Bubble", "MonsterArchnemesisTimeBubble"),
+                    ("Toxic", "MonsterArchnemesisPoisonerMagic"),
+                    ("Toxic", "MonsterArchnemesisPoisoner_"),
+                    ("Treant Horde", "MonsterArchnemesisSaplings"),
+                    ("Trickster", "MonsterArchnemesisTrickster_"),
+                    ("Tukohama-touched", "MonsterArchnemesisTukohama"),
+                    ("Union of Souls", "MonsterArchnemesisUnionOfSoulsMagic"),
+                    ("Vampiric", "MonsterArchnemesisVampiric"),
+                };
+                #endregion
+
+                if (settings.ReplaceMonsterNameWithArchnemesis)
+                {
+                    var archNemText = "";
+                    if (entity.HasComponent<ObjectMagicProperties>())
+                    {
+                        var objectMagicProperties = entity?.GetComponent<ObjectMagicProperties>();
+                        if (objectMagicProperties != null)
+                        {
+                            var mods = objectMagicProperties.Mods;
+
+                            if (mods != null)
+                            {
+                                foreach (var modText in mods)
+                                {
+                                    foreach (var value in archnemMods)
+                                    {
+                                        if (value.Item2.Contains(modText))
+                                        {
+                                            archNemText += "[" + value.Item1 + "] ";
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (!string.IsNullOrEmpty(archNemText))
+                        Text = archNemText;
                 }
             }
         }
