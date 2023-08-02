@@ -5,11 +5,11 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
     <TargetFramework>net6.0-windows</TargetFramework>
     <OutputType>Library</OutputType>
-    <OutputPath>..\..\..\..\PoEHelper\Plugins\Compiled\IconsBuilder\</OutputPath>
+    <OutputPath>..\..\..\..\..\PoEHelper\Plugins\Compiled\IconsBuilder\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExileCore">
-      <HintPath>..\..\..\..\PoeHelper\ExileCore.dll</HintPath>
+      <HintPath>..\..\..\..\..\PoeHelper\ExileCore.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>
