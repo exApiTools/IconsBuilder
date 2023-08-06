@@ -134,7 +134,7 @@ namespace IconsBuilder
                             MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.LootFilterLargeYellowCircle);
                             break;
                         case MonsterRarity.Unique:
-                            MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.LootFilterLargeCyanHexagon);
+                            MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.LootFilterLargeWhiteHexagon);
                             MainTexture.Color = Color.DarkOrange;
                             break;
                         default:
