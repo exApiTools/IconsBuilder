@@ -47,6 +47,8 @@ namespace IconsBuilder
                 CType = ChestType.Legion;
             else if (Entity.League == LeagueType.Heist)
                 CType = ChestType.Heist;
+            else if (Entity.Path.StartsWith("Metadata/Chests/LeaguesExpedition/", StringComparison.Ordinal))
+                CType = ChestType.Expedition;
             else
                 CType = ChestType.SmallChest;
 
@@ -66,27 +68,14 @@ namespace IconsBuilder
                 }
             }
 
-            switch (Rarity)
+            MainTexture.Color = Rarity switch
             {
-                case MonsterRarity.White:
-                    MainTexture.Color = Color.White;
-                    break;
-                case MonsterRarity.Magic:
-                    MainTexture.Color = HudSkin.MagicColor;
-                    break;
-
-                case MonsterRarity.Rare:
-                    MainTexture.Color = HudSkin.RareColor;
-                    break;
-
-                case MonsterRarity.Unique:
-                    MainTexture.Color = HudSkin.UniqueColor;
-                    break;
-
-                default:
-                    MainTexture.Color = Color.Purple;
-                    break;
-            }
+                MonsterRarity.White => Color.White,
+                MonsterRarity.Magic => HudSkin.MagicColor,
+                MonsterRarity.Rare => HudSkin.RareColor,
+                MonsterRarity.Unique => HudSkin.UniqueColor,
+                _ => Color.Purple
+            };
 
             switch (CType)
             {
@@ -359,13 +348,18 @@ namespace IconsBuilder
                     MainTexture.Color = Color.ForestGreen;
                     break;
                 case ChestType.Heist:
-                        //DebugWindow.LogMsg(Entity.Path + " [ChestType.Fossil]");
-                        //MainTexture.UV = SpriteHelper.GetUV(MyMapIconsIndex.Divination);
-                        Text = settings.HeistText.Value ? Entity.Path.Replace("Metadata/Chests/LeagueHeist/HeistChest", "").Replace("Thug", "")
-                            .Replace("Science", "").Replace("Military", "").Replace("Robot", "")
-                            .Replace("Secondary", "") : ""; ;
+                    MainTexture.Size = settings.SizeHeistChestIcon;
+                    MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.RewardChestGeneric);
+                    Text = settings.HeistText.Value
+                        ? Entity.Path
+                            .Replace("Metadata/Chests/LeagueHeist/HeistChest", "")
+                            .Replace("Thug", "")
+                            .Replace("Science", "")
+                            .Replace("Military", "")
+                            .Replace("Robot", "")
+                            .Replace("Secondary", "")
+                        : "";
 
-                    //MainTexture.Color = Color.HotPink;
                     break;
                 case ChestType.Synthesis:
                     Priority = IconPriority.Critical;
@@ -387,8 +381,24 @@ namespace IconsBuilder
                     Text = ((MapIconsIndex) minimapIconIndex).ToString().Replace("Legion", "");
                     MainTexture.Color = Color.White;
                     break;
+                case ChestType.Expedition:
+                    MainTexture.FileName = "Icons.png";
+                    Priority = IconPriority.Critical;
+                    MainTexture.Size = settings.ExpeditionChestIconSize;
+                    MainTexture.Color = Color.White;
+
+                    if (Entity.GetComponent<Stats>().StatDictionary.TryGetValue(GameStat.MonsterMinimapIcon, out var expeditionIconIndex))
+                    {
+                        var iconIndex = (MapIconsIndex)expeditionIconIndex;
+                        MainTexture.UV = SpriteHelper.GetUV(iconIndex);
+                        Text = iconIndex.ToString().Replace("Expedition", "");
+                    }
+                    else
+                        MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.ExpeditionChest2);
+
+                    break;
                 default:
-                    throw new ArgumentOutOfRangeException("Chest type not found.");
+                    throw new ArgumentOutOfRangeException(nameof(CType), CType, "Chest type not found.");
             }
 
             //Debug, useful for delve chests          

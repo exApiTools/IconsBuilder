@@ -23,6 +23,8 @@ namespace IconsBuilder
         public RangeNode<int> SizeEntityProximityMonsterIcon { get; set; } = new RangeNode<int>(10, 1, 50);
         [Menu("Size breach chest icon")]
         public RangeNode<int> SizeBreachChestIcon { get; set; } = new RangeNode<int>(10, 1, 50);
+        public RangeNode<int> SizeHeistChestIcon { get; set; } = new RangeNode<int>(30, 1, 50);
+        public RangeNode<int> ExpeditionChestIconSize { get; set; } = new RangeNode<int>(30, 1, 50);
         [Menu("Size chests icon")]
         public RangeNode<int> SizeChestIcon { get; set; } = new RangeNode<int>(10, 1, 50);
         [Menu("Show small chests")]
