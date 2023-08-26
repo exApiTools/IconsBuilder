@@ -115,6 +115,14 @@ namespace IconsBuilder
                     Show = () => entity.IsValid && (entity.GetComponent<Transitionable>()?.Flag1 ?? 4) < 3;
                     MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.PartyLeader);
                 }
+                else if (entity.Path is "Metadata/Terrain/Leagues/Sanctum/Objects/SanctumMote")
+                {
+                    Priority = IconPriority.High;
+                    Text = "";
+                    Show = () => entity.IsValid;
+                    MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.BlightPath);
+                    MainTexture.Size = settings.SanctumGoldIconSize;
+                }
             }
         }
     }

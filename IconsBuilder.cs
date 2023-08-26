@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -247,13 +247,11 @@ namespace IconsBuilder
                 return new MiscIcon(entity, GameController, Settings);
             }
 
-            if (entity.HasComponent<MinimapIcon>() && entity.HasComponent<Targetable>() && entity.League != LeagueType.Heist)
+            if (entity.HasComponent<MinimapIcon>() && entity.HasComponent<Targetable>() && entity.League != LeagueType.Heist ||
+                entity.Path.Contains("Metadata/Terrain/Leagues/Delve/Objects/EncounterControlObjects/AzuriteEncounterController") ||
+                entity.Type == EntityType.LegionMonolith ||
+                entity.Path is "Metadata/Terrain/Leagues/Sanctum/Objects/SanctumMote")
                 return new MiscIcon(entity, GameController, Settings);
-
-            if (entity.Path.Contains("Metadata/Terrain/Leagues/Delve/Objects/EncounterControlObjects/AzuriteEncounterController"))
-                return new MiscIcon(entity, GameController, Settings);
-
-            if (entity.Type == EntityType.LegionMonolith) return new MiscIcon(entity, GameController, Settings);
 
             return null;
         }

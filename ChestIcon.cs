@@ -49,6 +49,8 @@ namespace IconsBuilder
                 CType = ChestType.Heist;
             else if (Entity.Path.StartsWith("Metadata/Chests/LeaguesExpedition/", StringComparison.Ordinal))
                 CType = ChestType.Expedition;
+            else if (Entity.Path.StartsWith("Metadata/Chests/LeagueSanctum/", StringComparison.Ordinal))
+                CType = ChestType.Sanctum;
             else
                 CType = ChestType.SmallChest;
 
@@ -396,6 +398,13 @@ namespace IconsBuilder
                     else
                         MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.ExpeditionChest2);
 
+                    break;                
+                case ChestType.Sanctum:
+                    MainTexture.FileName = "Icons.png";
+                    Priority = IconPriority.Critical;
+                    MainTexture.Size = settings.SanctumChestIconSize;
+                    MainTexture.Color = Color.White;
+                    MainTexture.UV = SpriteHelper.GetUV(MapIconsIndex.HeistPathChest);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(CType), CType, "Chest type not found.");
