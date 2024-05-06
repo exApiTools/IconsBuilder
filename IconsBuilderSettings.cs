@@ -6,6 +6,7 @@ namespace IconsBuilder
 {
     public class IconsBuilderSettings : ISettings
     {
+        public ToggleNode UseReplacementsForGameIconsWhenOutOfRange { get; set; } = new ToggleNode(true);
 
         [Menu("Default size")]
         public float SizeDefaultIcon { get; set; } = new RangeNode<int>(16, 1, 50);

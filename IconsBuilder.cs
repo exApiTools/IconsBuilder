@@ -9,6 +9,7 @@ using ExileCore.PoEMemory.MemoryObjects;
 using ExileCore.Shared;
 using ExileCore.Shared.Abstract;
 using ExileCore.Shared.Enums;
+using IconsBuilder.Icons;
 using JM.LinqFaster;
 using SharpDX;
 
@@ -197,6 +198,17 @@ namespace IconsBuilder
         private BaseIcon EntityAddedLogic(Entity entity)
         {
             if (SkipEntity(entity)) return null;
+            
+            if (Settings.UseReplacementsForGameIconsWhenOutOfRange &&
+                entity.TryGetComponent<MinimapIcon>(out var minimapIconComponent) && 
+                !minimapIconComponent.IsHide)
+            {
+                var name = minimapIconComponent.Name;
+                if (!string.IsNullOrEmpty(name))
+                {
+                    return new IngameIconReplacerIcon(entity, Settings);
+                }
+            }
 
             //Monsters
             if (entity.Type == EntityType.Monster)
