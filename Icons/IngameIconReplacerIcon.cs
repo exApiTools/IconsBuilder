@@ -17,6 +17,7 @@ public class IngameIconReplacerIcon : BaseIcon
         var isHidden = false;
         var transitionableFlag1 = 1;
         var shrineIsAvailable = true;
+        var isOpened = false;
 
         T Update<T>(ref T store, Func<T> update)
         {
@@ -26,6 +27,7 @@ public class IngameIconReplacerIcon : BaseIcon
         Show = () => !Update(ref isHidden, () => entity.GetComponent<MinimapIcon>()?.IsHide ?? isHidden) &&
                      Update(ref transitionableFlag1, () => entity.GetComponent<Transitionable>()?.Flag1 ?? 1) == 1 &&
                      Update(ref shrineIsAvailable, () => entity.GetComponent<Shrine>()?.IsAvailable ?? shrineIsAvailable) &&
+                     !Update(ref isOpened, () => entity.GetComponent<Chest>()?.IsOpened ?? isOpened) &&
                      !entity.IsValid;
         var name = entity.GetComponent<MinimapIcon>()?.Name ?? "";
         var iconIndexByName = Extensions.IconIndexByName(name);
