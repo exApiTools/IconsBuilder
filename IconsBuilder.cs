@@ -143,7 +143,7 @@ namespace IconsBuilder
         public override bool Initialise()
         {
             LoadConfig();
-            
+
 
             Settings.Reparse.OnPressed += () =>
             {
@@ -198,9 +198,9 @@ namespace IconsBuilder
         private BaseIcon EntityAddedLogic(Entity entity)
         {
             if (SkipEntity(entity)) return null;
-            
+
             if (Settings.UseReplacementsForGameIconsWhenOutOfRange &&
-                entity.TryGetComponent<MinimapIcon>(out var minimapIconComponent) && 
+                entity.TryGetComponent<MinimapIcon>(out var minimapIconComponent) &&
                 !minimapIconComponent.IsHide)
             {
                 var name = minimapIconComponent.Name;
@@ -230,11 +230,13 @@ namespace IconsBuilder
             //Player
             if (entity.Type == EntityType.Player)
             {
-                if (GameController.IngameState.Data.LocalPlayer.Address == entity.Address ||
-                    GameController.IngameState.Data.LocalPlayer.GetComponent<Render>().Name == entity.RenderName) return null;
-
                 if (!entity.IsValid) return null;
-                return new PlayerIcon(entity, GameController, Settings, modIcons);
+
+                if (GameController.IngameState.Data.LocalPlayer.GetComponent<Player>().PlayerName == entity.GetComponent<Player>().PlayerName)
+                    return new SelfIcon(entity, GameController, Settings, modIcons);
+
+                else
+                    return new PlayerIcon(entity, GameController, Settings, modIcons);
             }
 
             //Chests

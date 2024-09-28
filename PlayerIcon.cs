@@ -15,10 +15,11 @@ namespace IconsBuilder
         public PlayerIcon(Entity entity, GameController gameController, IconsBuilderSettings settings, Dictionary<string, Size2> modIcons) :
             base(entity, settings)
         {
-            Show = () => entity.IsValid && !settings.HidePlayers;
+            Show = () => entity.IsValid && !settings.HideOtherPlayers;
             if (_HasIngameIcon) return;
-            MainTexture = new HudTexture("Icons.png") {UV = SpriteHelper.GetUV(MapIconsIndex.OtherPlayer)};
+            MainTexture = new HudTexture("Icons.png") { UV = SpriteHelper.GetUV(MapIconsIndex.OtherPlayer) };
             Text = entity.GetComponent<Player>().PlayerName;
+            Priority = IconPriority.VeryHigh;
         }
     }
 }

@@ -12,6 +12,8 @@ namespace IconsBuilder
         public float SizeDefaultIcon { get; set; } = new RangeNode<int>(16, 1, 50);
         [Menu("Size NPC icon")]
         public RangeNode<int> SizeNpcIcon { get; set; } = new RangeNode<int>(10, 1, 50);
+        [Menu("Size Character icon")]
+        public RangeNode<int> SizeSelf { get; set; } = new RangeNode<int>(10, 1, 50);
         [Menu("Size monster icon")]
         public RangeNode<int> SizeEntityWhiteIcon { get; set; } = new RangeNode<int>(10, 1, 50);
         [Menu("Size magic monster icon")]
@@ -49,7 +51,8 @@ namespace IconsBuilder
         public ButtonNode Reparse { get; set; } = new ButtonNode();
         public ToggleNode MultiThreading { get; set; } = new ToggleNode(false);
         public RangeNode<int> MultiThreadingWhenEntityMoreThan { get; set; } = new RangeNode<int>(10, 1, 200);
-        public ToggleNode HidePlayers { get; set; } = new ToggleNode(false);
+        public ToggleNode HideSelf { get; set; } = new ToggleNode(false);
+        public ToggleNode HideOtherPlayers { get; set; } = new ToggleNode(false);
         public ToggleNode HideMinions { get; set; } = new ToggleNode(false);
         public ToggleNode DeliriumText { get; set; } = new ToggleNode(false);
         public ToggleNode HeistText { get; set; } = new ToggleNode(true);
@@ -60,6 +63,5 @@ namespace IconsBuilder
         public ToggleNode ShowUniqueMonsterName { get; set; } = new ToggleNode(false);
         public ToggleNode ReplaceMonsterNameWithArchnemesis { get; set; } = new ToggleNode(false);
         public ToggleNode Enable { get; set; } = new ToggleNode(true);
-        
     }
 }
